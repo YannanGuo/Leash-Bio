@@ -35,6 +35,7 @@ class MLP_L3(nn.Module):
         self.dropout = nn.Dropout(p=0.5)
         
     def forward(self, X):
+        
         X = X.unsqueeze(1) # Add channel dimension (batch_size, 1, X_dim)
 
         x = F.relu(self.fc1(X))

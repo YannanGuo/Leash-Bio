@@ -31,8 +31,8 @@ class MLP_L3(nn.Module):
         self.input = X_dim
         self.fc1 = nn.Linear(X_dim, 1024)
         self.fc2 = nn.Linear(1024, 1024)
-        self.fc3 = nn.Linear(1024, 1024)
-        self.dropout = nn.Dropout(p=0.1)
+        self.fc3 = nn.Linear(1024, 1)
+        self.dropout = nn.Dropout(p=0.5)
         
     def forward(self, X):
         X = X.unsqueeze(1) # Add channel dimension (batch_size, 1, X_dim)
@@ -40,7 +40,8 @@ class MLP_L3(nn.Module):
         x = F.relu(self.fc1(X))
         x = self.dropout(x)
         x = F.relu(self.fc2(x))
-        
+        x = self.dropout(x)
+        x = F.relu(self.fc3(x))
         return torch.sigmoid(x)   
 
 
